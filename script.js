@@ -1,10 +1,10 @@
-let apiKey = 'c40b28aa33c2bef2881ab9e4f13c3ef7';
+require('dotenv').config();
+let apiKey = process.env.APIKEY;
 let dateEl = document.querySelector('#date');
 let brookwoodLat = '33.802790';
 let brookwoodLon = '-84.398100';
 let hoursEl = document.querySelector('#hours');
 let daysEl = document.querySelector('#days');
-let refreshInterval;
 
 function init() {
     dateEl.textContent = moment().format('LLLL');
