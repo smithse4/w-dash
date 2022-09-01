@@ -1,55 +1,64 @@
-require('dotenv').config();
-let apiKey = process.env.APIKEY;
+let apiKey = 'c40b28aa33c2bef2881ab9e4f13c3ef7'
 let dateEl = document.querySelector('#date');
-let brookwoodLat = '33.802790';
-let brookwoodLon = '-84.398100';
 let hoursEl = document.querySelector('#hours');
 let daysEl = document.querySelector('#days');
+let todayBox = document.querySelector('#today-box');
+let todayEl = document.querySelector('#today-box');
+let fiveBox = document.querySelector('#five-box');
+let inputEl = document.querySelector('#search-input');
+let btnEl = document.querySelector('#search-btn');
+let todayCity = document.querySelector('#city-name');
+let todayIcon = document.querySelector('#icon');
+let todayTemp = document.querySelector('#temp');
+let todayHum = document.querySelector('#humidity');
+let todayUVI = document.querySelector('#uvi');
+let todayWind = document.querySelector('#wind');
 
+// Grab city input and initialize api calls
 function init() {
     dateEl.textContent = moment().format('LLLL');
-    getForecast();
+    let city = inputEl.value.trim();
+    getLatLon(city);
+    todayBox.style.display = 'block';
+    fiveBox.style.display = 'block';
+    inputEl.value = "";
 }
 
-function getForecast() {
-    let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${brookwoodLat}&lon=${brookwoodLon}&units=imperial&appid=${apiKey}`
+// Get Latitude and Longitude for One Call API
+function getLatLon(city) {
+    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`
 
     fetch(apiUrl)
     .then((res) => {
         return res.json();
     })
     .then((data) => {
-        console.log('Forecast: ', data);
+        getForecast(data.coord.lat, data.coord.lon, city);
+    });
+}
 
-        let hoursData = data.hourly;
+// Get Weather Forecast
+function getForecast(lat, lon, city) {
+    let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=imperial&appid=${apiKey}`
 
-        for (let i=0; i<10;i++) {
+    fetch(apiUrl)
+    .then((res) => {
+        return res.json();
+    })
+    .then((data) => {
 
-            let hourEl = document.createElement('div');
-            hourEl.setAttribute('class', 'hour');
+        // current weather
+        todayCity.textContent = city;
+        todayIcon.setAttribute('src', `http://openweathermap.org/img/wn/${data.current.weather[0].icon}.png`);
+        todayTemp.textContent = `${data.current.temp} F`;
+        todayHum.textContent = `${data.current.humidity}%`;
+        todayUVI.textContent = data.current.uvi;
+        todayWind.textContent = `${data.current.wind_speed} mph`;
 
-            let hourH3 = document.createElement('h3');
-            let hourImg = document.createElement('img');
-            let hourP1 = document.createElement('p');
-            let hourP2 = document.createElement('p');
+        // clear old 5 day cards
+        daysEl.innerHTML = '';
 
-            hourH3.setAttribute('class', 'hour-time');
-            hourImg.setAttribute('class', 'hour-img');
-            hourP1.setAttribute('class', 'hour-extra');
-            hourP2.setAttribute('class', 'hour-extra');
-
-            let hTime = new Date(hoursData[i].dt * 1000).toLocaleString().split(', ')[1].split(':00:00').join('');
-
-            hourH3.textContent = hTime;
-            hourImg.setAttribute('src', `http://openweathermap.org/img/wn/${hoursData[i].weather[0].icon}.png`);
-            hourP1.textContent = `Temp: ${hoursData[i].temp} F`;
-            hourP2.textContent = `Humidity: ${hoursData[i].humidity}%`;
-
-            hourEl.append(hourH3, hourImg, hourP1, hourP2);
-            hoursEl.append(hourEl);
-
-        }
-
+        // build 5 day cards
         let daysData = data.daily;
 
         for (let i=0; i<5;i++) {
@@ -68,7 +77,6 @@ function getForecast() {
             dayp2.setAttribute('class', 'day-extra');
 
             let hDay = new Date(daysData[i].dt * 1000).toLocaleString().split(',')[0];
-            console.log('hDay: ', hDay)
 
             dayH3.textContent = hDay;
             dayImg.setAttribute('src', `http://openweathermap.org/img/wn/${daysData[i].weather[0].icon}.png`);
@@ -83,11 +91,4 @@ function getForecast() {
     })
 }
 
-init();
-
-refreshInterval = setInterval(function(){
-    hoursEl.innerHTML = '';
-    daysEl.innerHTML = '';
-    init();
-}, 300000);
-
+btnEl.addEventListener('click', init);

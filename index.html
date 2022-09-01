@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weatherrr</title>
+    <title>Weather!</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -17,21 +17,34 @@
 <body>
 
     <header>
-        <h1>Hello, Stephanie!</h1>
+        <h1>All weather, all the time!</h1>
         <p id="date"></p>
     </header>
     <main>
 
-        <div class="break"></div>
-        <h2>Five Day Forecast</h2>
-        <div class="break"></div>
-        <div id="days"></div>
+        <h2>Get Weather</h2>
+        <div id="search-box">
+            <input type="text" id="search-input" placeholder="CITY NAME" />
+            <button id="search-btn">SEARCH</button>
+        </div>
 
         <div class="break"></div>
 
-        <h2>Hourly Forecast</h2>
-        <div class="break"></div>
-        <div id="hours"></div>
+        <div id="today-box" style="display: none">
+            <div id="today">
+                <h2>Today's forecast for &nbsp;<span id='city-name'></span></h2>
+                <img id="icon">
+                <p>Temperature: <span id='temp'></span></p>
+                <p>Humidity: <span id='humidity'></span></p>
+                <p>UV Index: <span id='uvi'></span></p>
+                <p>Wind speed: <span id='wind'></span></p>
+            </div>
+        </div>
+
+        <div id="five-box" style="display: none">
+            <div id="days"></div>
+        </div>
+
     </main>
     <footer>
         <h4>&copy; &nbsp S M I T H &nbsp 2 0 2 2</h4>
