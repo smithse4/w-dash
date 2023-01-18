@@ -93,6 +93,18 @@ main section {
   margin: 1%;
 }
 
+h3 {
+  font-size: 22px;
+}
+
+p {
+  font-weight: 600;
+}
+
+p span {
+  font-weight: 400;
+}
+
 footer {
   position: sticky;
   top: 100vh;
