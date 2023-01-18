@@ -22,24 +22,28 @@
     </header>
     <main>
 
-        <section class="search-container">
-            <div id="search-box">
-                <h2>Get the weather in...</h2>
-                <input type="text" id="search-input" placeholder="CITY NAME" />
-                <button id="search-btn">SEARCH</button>
+        <h2>Get Weather</h2>
+        <div id="search-box">
+            <input type="text" id="search-input" placeholder="CITY NAME" />
+            <button id="search-btn">SEARCH</button>
+        </div>
+
+        <div class="break"></div>
+
+        <div id="today-box" style="display: none">
+            <div id="today">
+                <h2>Today's forecast for &nbsp;<span id='city-name'></span></h2>
+                <img id="icon">
+                <p>Temperature: <span id='temp'></span></p>
+                <p>Humidity: <span id='humidity'></span></p>
+                <p>UV Index: <span id='uvi'></span></p>
+                <p>Wind speed: <span id='wind'></span></p>
             </div>
-        </section>
+        </div>
 
         <div id="five-box" style="display: none">
-            <!-- <div id="type">
-                <button id="btn-5">5 DAY</button>
-                <button id="btn-hr">HOURLY</button>
-            </div> -->
             <div id="days"></div>
-            <!-- <div id="hours"></div> -->
         </div>
-        
-        
 
     </main>
     <footer>
