@@ -73,21 +73,49 @@ main section {
 }
 
 #five-box {
-  width: 100%;
+  width: 80%;
+  margin: auto;
 }
 
-#days {
+#type {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+}
+
+#type button {
+  margin: 1%;
+  padding: 8px;
+  background-color: rgba(255, 255, 255, 0.3);
+  border: none;
+  color: white;
+  border-radius: 0;
+  min-width: 100px;
+  font-weight: 800;
+  font-size: 16px;
+}
+
+#type button:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+  cursor:pointer;
+}
+
+#type button[data-active] {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+#days, #hours {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
   width: 100%;
+  margin: auto;
 }
 
 .day {
-  min-width: 12%;
-  max-width: 12%;
-  padding: 1%;
+  min-width: 14%;
+  /* max-width: 12%; */
+  padding: 2%;
   background-color: rgba(255, 255, 255, 0.3);
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   margin: 1%;

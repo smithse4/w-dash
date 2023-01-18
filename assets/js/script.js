@@ -44,14 +44,13 @@ function getForecast(lat, lon, city) {
 
         console.log(data)
 
+        // DISPLAY 5 DAY WEATHER
+
         // clear old 5 day cards
         daysEl.innerHTML = '';
-
         // build 5 day cards
         let daysData = data.daily;
-
         let HTML = [];
-
         for (let i=0; i<5;i++) {
 
             let hDay = new Date(daysData[i].dt * 1000).toLocaleString().split(',')[0];
@@ -69,14 +68,52 @@ function getForecast(lat, lon, city) {
             HTML.push(newHTML);
 
         }
-
         HTML = HTML.join('');
-
         daysEl.innerHTML = HTML;
 
+        // DISPLAY HOURLY WEATHER
+        // clear old 5 day cards
+        hours.innerHTML = '';
+        // build 5 day cards
+        let hoursData = data.hourly;
+        let hourHTML = [];
+        for (let i=0; i<5;i++) {
 
+            let hDay = new Date(hoursData[i].dt * 1000).toLocaleString().split(', ')[1];
+            let imgSrc = `http://openweathermap.org/img/wn/${hoursData[i].weather[0].icon}.png`
+
+            let newHTML = `
+            <div class="day">
+                <h3 class="day-time">${hDay}</h3>
+                <img class="day-img" src="${imgSrc}">
+                <p class="day-extra">Temp: <span>${Math.round(hoursData[i].temp)} F</span></p>
+                <p class="day-extra">Feels Like: <span>${Math.round(hoursData[i].feels_like)} F</span></p>
+                <p class="day-extra">Humidity: <span>${hoursData[i].humidity}%</span></p>
+            </div>
+            `
+            hourHTML.push(newHTML);
+
+        }
+        hourHTML = hourHTML.join('');
+        hours.innerHTML = hourHTML;
 
     })
 }
 
+function show5Day () {
+    daysEl.style.display = 'flex';
+    hours.style.display = 'none';
+    btn5.setAttribute('data-active', '');
+    btnHr.removeAttribute('data-active');
+}
+
+function showHourly() {
+    daysEl.style.display = 'none';
+    hours.style.display = 'flex';
+    btnHr.setAttribute('data-active', '');
+    btn5.removeAttribute('data-active');
+}
+
 btnEl.addEventListener('click', init);
+btn5.addEventListener('click', show5Day);
+btnHr.addEventListener('click', showHourly);
