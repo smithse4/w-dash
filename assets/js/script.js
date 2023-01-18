@@ -42,38 +42,62 @@ function getForecast(lat, lon, city) {
     })
     .then((data) => {
 
+        console.log(data)
+
         // clear old 5 day cards
         daysEl.innerHTML = '';
 
         // build 5 day cards
         let daysData = data.daily;
 
+        let HTML = [];
+
         for (let i=0; i<5;i++) {
 
-            let dayEl = document.createElement('div');
-            dayEl.setAttribute('class', 'day');
-
-            let dayH3 = document.createElement('h3');
-            let dayImg = document.createElement('img');
-            let dayP1 = document.createElement('p');
-            let dayp2 = document.createElement('p');
-
-            dayH3.setAttribute('class', 'day-time');
-            dayImg.setAttribute('class', 'day-img');
-            dayP1.setAttribute('class', 'day-extra');
-            dayp2.setAttribute('class', 'day-extra');
-
             let hDay = new Date(daysData[i].dt * 1000).toLocaleString().split(',')[0];
+            let imgSrc = `http://openweathermap.org/img/wn/${daysData[i].weather[0].icon}.png`
 
-            dayH3.textContent = hDay;
-            dayImg.setAttribute('src', `http://openweathermap.org/img/wn/${daysData[i].weather[0].icon}.png`);
-            dayP1.textContent = `Temp: ${daysData[i].temp.day} F`;
-            dayp2.textContent = `Humidity: ${daysData[i].humidity}%`;
+            let newHTML = `
+            <div class="day">
+                <h3 class="day-time">${hDay}</h3>
+                <img class="day-img" src="${imgSrc}">
+                <p class="day-extra">High: <span>${Math.round(daysData[i].temp.max)}</span> F</p>
+                <p class="day-extra">Low: <span>${Math.round(daysData[i].temp.min)}</span> F</p>
+                <p class="day-extra">Humidity: <span>${daysData[i].humidity}</span>%</p>
+            </div>
+            `
+            HTML.push(newHTML);
 
-            dayEl.append(dayH3, dayImg, dayP1, dayp2);
-            daysEl.append(dayEl);
+            // let dayEl = document.createElement('div');
+            // dayEl.setAttribute('class', 'day');
+
+            // let dayH3 = document.createElement('h3');
+            // let dayImg = document.createElement('img');
+            // let dayP1 = document.createElement('p');
+            // let dayp2 = document.createElement('p');
+
+            // dayH3.setAttribute('class', 'day-time');
+            // dayImg.setAttribute('class', 'day-img');
+            // dayP1.setAttribute('class', 'day-extra');
+            // dayp2.setAttribute('class', 'day-extra');
+
+
+
+            // dayH3.textContent = hDay;
+            // dayImg.setAttribute('src', `http://openweathermap.org/img/wn/${daysData[i].weather[0].icon}.png`);
+            // dayP1.textContent = `Temp: ${Math.round(daysData[i].temp.day)} F`;
+            // dayp2.textContent = `Humidity: ${daysData[i].humidity}%`;
+
+            // dayEl.append(dayH3, dayImg, dayP1, dayp2);
+            // daysEl.append(dayEl);
 
         }
+
+        HTML = HTML.join('');
+
+        daysEl.innerHTML = HTML;
+
+
 
     })
 }
