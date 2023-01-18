@@ -42,15 +42,18 @@ function getForecast(lat, lon, city) {
     })
     .then((data) => {
 
-        console.log(data)
+        // console.log(data)
 
         // DISPLAY 5 DAY WEATHER
 
         // clear old 5 day cards
         daysEl.innerHTML = '';
+
         // build 5 day cards
         let daysData = data.daily;
+
         let HTML = [];
+
         for (let i=0; i<5;i++) {
 
             let hDay = new Date(daysData[i].dt * 1000).toLocaleString().split(',')[0];
@@ -69,14 +72,19 @@ function getForecast(lat, lon, city) {
 
         }
         HTML = HTML.join('');
+
         daysEl.innerHTML = HTML;
 
         // DISPLAY HOURLY WEATHER
+
         // clear old 5 day cards
         hours.innerHTML = '';
+
         // build 5 day cards
         let hoursData = data.hourly;
+
         let hourHTML = [];
+
         for (let i=0; i<5;i++) {
 
             let hDay = new Date(hoursData[i].dt * 1000).toLocaleString().split(', ')[1];
@@ -95,6 +103,7 @@ function getForecast(lat, lon, city) {
 
         }
         hourHTML = hourHTML.join('');
+        
         hours.innerHTML = hourHTML;
 
     })

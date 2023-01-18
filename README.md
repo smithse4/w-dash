@@ -1,6 +1,6 @@
 # Weather App
 
-Weather app with current and five day weather forecasts using Open Weather Map API.
+Weather app with five day  and hourly weather forecasts using Open Weather Map API.
 
 ![screenshot](./assets/images/weather.png)
 
