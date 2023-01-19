@@ -141,21 +141,48 @@ function checkDataIndex() {
     }
 }
 
-let pgNum = 0;
+let pgNum = 1;
 let prevPg;
 let nextPg;
 pages();
 
 let pgI = [
-    [0, 1, 2, 3, 4],
-    [5, 6, 7, 8, 9],
-    [10, 11, 12, 13, 14],
-    [15, 16, 17, 18, 19],
-    [20, 21, 22, 23, 24],
-    [25, 26, 27, 28, 29],
-    [30, 31, 32, 33, 34],
-    [35, 36, 37, 38, 39],
-    [40, 41, 42, 43, 44]
+    {
+        page: 1,
+        iarray: [0, 1, 2, 3, 4]
+    },
+    {
+        page: 2,
+        iarray: [5, 6, 7, 8, 9]
+    },
+    {
+        page: 3,
+        iarray: [10, 11, 12, 13, 14]
+    },
+    {
+        page: 4,
+        iarray: [15, 16, 17, 18, 19]
+    },
+    {
+        page: 5,
+        iarray: [20, 21, 22, 23, 24]
+    },
+    {
+        page: 6,
+        iarray: [25, 26, 27, 28, 29]
+    },
+    {
+        page: 7,
+        iarray: [30, 31, 32, 33, 34]
+    },
+    {
+        page: 8,
+        iarray: [35, 36, 37, 38, 39]
+    },
+    {
+        page: 9,
+        iarray: [40, 41, 42, 43, 44]
+    }
 ]
 
 function pages() {
@@ -166,8 +193,8 @@ function pages() {
 function pageRight() {
     pgNum++
     pages();
-    if (pgNum > 8) {
-        pgNum = 8
+    if (pgNum > 9) {
+        pgNum = 9
         pages();
     }
 
@@ -180,8 +207,8 @@ function pageRight() {
 function pageLeft() {
     pgNum--;
     pages();
-    if(pgNum < 0) {
-        pgNum = 0;
+    if(pgNum < 1) {
+        pgNum = 1;
         pages();
     }
 
@@ -192,20 +219,20 @@ function pageLeft() {
 }
 
 function pageBlocks() {
-    if (prevPg < 0) {
+    if (prevPg < 1) {
         left.setAttribute('data-disabled', '');
         left.removeAttribute('data-active');
-        console.log('left less 0', left)
+        console.log('left less 1', left)
     } else {
         left.removeAttribute('data-disabled');
         left.setAttribute('data-active', '');
         console.log('left else', left)
     };
 
-    if (nextPg > 8) {
+    if (nextPg > 9) {
         right.setAttribute('data-disabled', '');
         right.removeAttribute('data-active');
-        console.log('right > 8', right)
+        console.log('right > 9', right)
     } else {
         right.removeAttribute('data-disabled');
         right.setAttribute('data-active', '');
@@ -215,12 +242,13 @@ function pageBlocks() {
 
 function scrollHours() {
     let allDays = document.querySelectorAll(".day[data-index]");
+    if (pgNum === pgI.page) {
+        let iss = pgI.iarray;
+        console.log('iss', iss)
+    }
     for(let i = 0; i < allDays.length; i++) {
         allDays[i].style.display = "none";
-        let dayI = parseInt(allDays[i].dataset.index);
-        if (pgI[pgNum].includes(dayI)) {
-            allDays[i].style.display = "block";
-        }
+
     }
 }
 
